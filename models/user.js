@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     name: {
         type: String, 
         required: true, 
@@ -27,7 +27,8 @@ const userSchema = new mongoose.Schema({
 );
 
 //User becomes users in db
-const User = mongoose.model("User", userSchema);
+const User = model("User", userSchema);
 
-exports.User = User;
+const _User = User;
+export { _User as User };
 

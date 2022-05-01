@@ -1,7 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose")
-const register = require("./routes/register") //exported as "router"
+import express, { json } from "express";
+import cors from "cors";
+import { connect } from "mongoose";
+import register from "./routes/register"; //exported as "router"
 
 
 //making our appln an object
@@ -10,7 +10,7 @@ const app = express()
 require("dotenv").config()
 
 //express.json() is nw a middleware fxn, which helps to expand our application
-app.use(express.json) //so that we can receive json data
+app.use(json) //so that we can receive json data
 app.use(cors())
 
 //point to reister router
@@ -26,8 +26,7 @@ const db_uri = process.env.DB_URI
 app.listen(port, console.log(`Server running on port ${port}`))
 
 //connecting to mongodb
-mongoose
-  .connect(db_uri, {
+connect(db_uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
