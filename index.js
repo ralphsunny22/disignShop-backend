@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose")
+const register = require("./routes/register") //exported as "router"
 
 
 //making our appln an object
@@ -9,8 +10,11 @@ const app = express()
 require("dotenv").config()
 
 //express.json() is nw a middleware fxn, which helps to expand our application
-app.use(express.json())
+app.use(express.json) //so that we can receive json data
 app.use(cors())
+
+//point to reister router
+app.use("/api/register", register)
 
 app.get("/", (req, res) => {
     res.send("Welcome to disign backend")
