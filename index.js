@@ -6,18 +6,22 @@ import registerRouter from "./routes/register.js"; //exported as "router"
 import bodyParser from "body-parser"
 
 
+
 //making our appln an object
 const app = express()
 
 dotenv.config()
 
 //express.json() is nw a middleware fxn, which helps to expand our application
-app.use(json) //so that we can receive json data
+//app.use(json) //so that we can receive json data
+// app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 
-//point to reister router
+//point to register router
 app.use("/api/register", registerRouter)
 
+//launch test appln
 app.get("/", (req, res) => {
     res.send("Welcome to disign backend")
 });

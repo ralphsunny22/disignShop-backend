@@ -6,6 +6,7 @@ import genAuthToken from "../utils/genAuthToken.js";
 
 const registerRouter = Router();
 
+//like controllers
 registerRouter.post("/", async (req, res) => {
     const schema = Joi.object({
         name: Joi.string().min(3).max(30).required(),
