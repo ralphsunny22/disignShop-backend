@@ -10,4 +10,5 @@ const genAuthToken = (user) => {
     return token;
 }
 
-module.exports = genAuthToken;
+// module.exports = genAuthToken;
+export default genAuthToken;

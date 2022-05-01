@@ -1,16 +1,16 @@
 import { genSalt, hash } from "bcrypt";
-import { object, string } from "joi";
+import Joi from "joi";
 import { Router } from "express";
-import { User } from "../models/user";
-import genAuthToken from "../utils/genAuthToken";
+import { User } from "../models/user.js";
+import genAuthToken from "../utils/genAuthToken.js";
 
-const router = Router();
+const registerRouter = Router();
 
-router.post("/", async (req, res) => {
-    const schema = object({
-        name: string().min(3).max(30).required(),
-        email: string().min(3).max(30).required().email(),
-        password: string().min(6).max(30).required(),
+registerRouter.post("/", async (req, res) => {
+    const schema = Joi.object({
+        name: Joi.string().min(3).max(30).required(),
+        email: Joi.string().min(3).max(30).required().email(),
+        password: Joi.string().min(6).max(30).required(),
     });
 
 const {error} = schema.validate(req.body)
@@ -41,7 +41,8 @@ const token = genAuthToken(user);
 res.send(token);
 });
 
-export default router;
+// module.exports = registerRouter;
+export default registerRouter;
 
 
 
