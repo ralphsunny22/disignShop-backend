@@ -1,10 +1,11 @@
-import { genSalt, hash } from "bcrypt";
-import Joi from "joi";
-import { Router } from "express";
-import { User } from "../models/user.js";
-import genAuthToken from "../utils/genAuthToken.js";
+const express = require("express");
+const bcrypt = require("bcrypt");
+const Joi = require("joi");
+const User = require("../models/user");
+const genAuthToken = require("../utils/genAuthToken");
 
-const registerRouter = Router();
+//create routers
+const registerRouter = express.Router();
 
 //like controllers
 registerRouter.post("/", async (req, res) => {
@@ -29,10 +30,11 @@ user = new User({
     email: req.body.email,
     password: req.body.password,
 })
+//res.send(user);
 
 //hash password
-const salt = await genSalt(10)
-user.password = await hash(user.password, salt)
+const salt = await bcrypt.genSalt(10)
+user.password = await bcrypt.hash(user.password, salt)
 
 //saved to db
 user = await user.save();
@@ -42,8 +44,8 @@ const token = genAuthToken(user);
 res.send(token);
 });
 
-// module.exports = registerRouter;
-export default registerRouter;
+module.exports = registerRouter;
+// export default registerRouter;
 
 
 

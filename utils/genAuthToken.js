@@ -1,6 +1,8 @@
-import jwt from "jsonwebtoken"
+const jwt = require("jsonwebtoken");
 const genAuthToken = (user) => {
     const secretKey = process.env.JWT_SECRET_KEY
+
+    //possible jwt outcomes
     const token = jwt.sign(
         {
         _id: user._id, name: user.name, email: user.email
@@ -10,5 +12,5 @@ const genAuthToken = (user) => {
     return token;
 }
 
-// module.exports = genAuthToken;
-export default genAuthToken;
+module.exports = genAuthToken;
+//export default genAuthToken;
