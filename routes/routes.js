@@ -68,7 +68,7 @@ router.get("/all-product", (req, res) => {
 })
 
 // Edit single product
-router.get('/edit/:id', (req, res) => {
+router.get('/edit-product/:id', (req, res) => {
     let id = req.params.id;
     Product.findById(id, (err, product) => {
         if(err){
@@ -121,5 +121,25 @@ router.post('/update-product/:id', upload, (req, res) => {
 
 });
 
+//delete product
+router.get('/delete-product/:id', (req, res) => {
+    let id = req.params.id;
+    Product.findByIdAndRemove(id, (err, product) => {
+        if (product.image != '') {
+            try {
+                fs.unlinkSync('./public/uploads/'+product.image);
+            } catch (err) {
+                console.log(err)
+            } 
+        }
+        
+        if (err) {
+            res.json({ message: err.message, type: 'info' });
+        } else {
+            req.flash('add_post_flash', 'Post Deleted Successfully!')
+            res.redirect("/all-product");
+        }
+    })
+})
 module.exports = router;
 // export default router;
